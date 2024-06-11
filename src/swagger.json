@@ -1,0 +1,609 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Tienda API",
+      "version": "1.0.0",
+      "description": "API para gestionar zapatos, usuarios y ventas de una tienda de zapatos",
+      "contact": {
+        "name": "Yennyfer Lesmes, Jhonatan Guarín, Andrés Sanabria",
+        "url": "https://github.com/tatianalesmes",
+        "email": "tatis26lesmes@gmail.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Servidor local"
+      },
+      {
+        "url": "https://apiteinda.onrender.com",
+        "description": "Servidor de producción"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Shoes",
+        "description": "API para gestionar los zapatos"
+      },
+      {
+        "name": "Users",
+        "description": "API para gestionar los usuarios"
+      },
+      {
+        "name": "Sales",
+        "description": "API para gestionar las ventas"
+      }
+    ],
+    "paths": {
+      "/shoes": {
+        "get": {
+          "summary": "Obtiene todos los zapatos",
+          "tags": [
+            "Shoes"
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve la lista de zapatos"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "post": {
+          "summary": "Crea un nuevo zapato",
+          "tags": [
+            "Shoes"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Shoe"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Zapato creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "$ref": "#/components/schemas/Shoe"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error del servidor",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/shoes/{id}": {
+        "get": {
+          "summary": "Obtiene un zapato por su ID",
+          "tags": [
+            "Shoes"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "ID del zapato",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve el zapato"
+            },
+            "404": {
+              "description": "No se encontró el zapato"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualiza un zapato existente por su ID",
+          "tags": [
+            "Shoes"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "ID del zapato a actualizar",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Shoe"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Zapato actualizado exitosamente"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Elimina un zapato por su ID",
+          "tags": [
+            "Shoes"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "ID del zapato a eliminar",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Zapato eliminado exitosamente"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        }
+      },
+      "/shoesBrand/{brand}": {
+        "get": {
+          "summary": "Obtiene zapatos por marca",
+          "tags": [
+            "Shoes"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "brand",
+              "required": true,
+              "description": "Marca del zapato",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve los zapatos de la marca especificada"
+            },
+            "404": {
+              "description": "No se encontraron zapatos con esa marca"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        }
+      },
+      "/sales": {
+        "get": {
+          "summary": "Obtiene todas las ventas",
+          "tags": [
+            "Sales"
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve la lista de ventas"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "post": {
+          "summary": "Crea una nueva venta",
+          "tags": [
+            "Sales"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sale"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Venta creada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "$ref": "#/components/schemas/Sale"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error del servidor",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "err": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/sales/{userId}": {
+        "get": {
+          "summary": "Obtener una venta por ID de usuario",
+          "description": "Obtiene una venta específica según el ID de usuario",
+          "tags": [
+            "Sales"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "userId",
+              "required": true,
+              "description": "ID del usuario para buscar la venta.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve la venta"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "summary": "Obtiene todos los usuarios",
+          "tags": [
+            "Users"
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve la lista de usuarios"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "post": {
+          "summary": "Crea un nuevo usuario",
+          "tags": [
+            "Users"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "lastName",
+                    "mail",
+                    "password"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Nombre del usuario",
+                      "example": "Juan"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Apellido del usuario",
+                      "example": "Pérez"
+                    },
+                    "mail": {
+                      "type": "string",
+                      "description": "Correo electrónico del usuario",
+                      "example": "usuario@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Contraseña del usuario",
+                      "example": "securepassword"
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "Rol del usuario (opcional)",
+                      "example": "Administrador"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Usuario creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "El correo electrónico ya está registrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "El correo electrónico ya está registrado"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error del servidor",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "err": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "summary": "Obtiene un usuario por su ID",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "ID del usuario",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Éxito, devuelve el usuario"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualiza un usuario existente por su ID",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "ID del usuario a actualizar",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mail": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "mail": "usuario@example.com"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado exitosamente"
+            },
+            "500": {
+              "description": "Error del servidor"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Shoe": {
+          "type": "object",
+          "properties": {
+            "Brand": {
+              "type": "string",
+              "description": "Marca del zapato"
+            },
+            "Model": {
+              "type": "string",
+              "description": "Modelo del zapato"
+            },
+            "Size": {
+              "type": "number",
+              "description": "Talla del zapato"
+            },
+            "Color": {
+              "type": "string",
+              "description": "Color del zapato"
+            },
+            "Price": {
+              "type": "number",
+              "description": "Precio del zapato"
+            },
+            "Stock": {
+              "type": "number",
+              "description": "Stock del zapato"
+            },
+            "Image": {
+              "type": "string",
+              "description": "URL de la imagen del zapato"
+            }
+          }
+        },
+        "Sale": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "ID de la venta, generado automáticamente",
+              "readOnly": true
+            },
+            "userId": {
+              "type": "string",
+              "description": "ID del usuario que realiza la venta"
+            },
+            "shoes": {
+              "type": "array",
+              "description": "Lista de zapatos vendidos",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "shoeId": {
+                    "type": "string",
+                    "description": "ID del zapato vendido"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "Cantidad de este zapato vendido"
+                  }
+                }
+              }
+            },
+            "totalPrice": {
+              "type": "number",
+              "description": "Precio total de la venta"
+            }
+          },
+          "example": {
+            "userId": "60d21b46785d8e15d4"
+          }
+        },
+        "User": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "ID del usuario, generado automáticamente",
+              "readOnly": true
+            },
+            "name": {
+              "type": "string",
+              "description": "Nombre del usuario"
+            },
+            "lastName": {
+              "type": "string",
+              "description": "Apellido del usuario"
+            },
+            "mail": {
+              "type": "string",
+              "description": "Correo electrónico del usuario"
+            },
+            "password": {
+              "type": "string",
+              "description": "Contraseña del usuario"
+            },
+            "role": {
+              "type": "string",
+              "description": "Rol del usuario (opcional)"
+            }
+          },
+          "example": {
+            "name": "Juan",
+            "lastName": "Pérez",
+            "mail": "usuario@example.com",
+            "password": "securepassword"
+          }
+        }
+      }
+    }
+  }

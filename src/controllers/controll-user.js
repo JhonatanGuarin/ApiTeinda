@@ -55,6 +55,7 @@ module.exports = {
       }
     },
 
+    //cambio
     updateUser: async (req, res) => {
       try {
         const { id } = req.params;

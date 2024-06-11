@@ -3,13 +3,19 @@ const morgan = require('morgan')
 const cors = require('cors')
 const swaggerUI = require('swagger-ui-express')
 
+//const path = require('path'); // Importa el módulo 'path'
+
 const app = express()
 
 
 //Api 
 const swaggerSpec = require('./swagger')
 app.use('/docs',swaggerUI.serve,swaggerUI.setup(swaggerSpec))
-app.use('/sales', require('./routes/sales-routes'));
+
+
+
+// Define la ruta para servir el archivo OpenAPI o Swagger
+//app.use('/docs', express.static(path.join(__dirname, './swagger.json')));
 
 
 app.use('/sales', require('./routes/sales-routes'));

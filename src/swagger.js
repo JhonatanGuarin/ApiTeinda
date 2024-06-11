@@ -21,9 +21,6 @@ const swaggerDefinition = {
 
    servers: [
     {
-      url: 'http://localhost:3000',
-    },
-    {
       url: 'https://apiteinda.onrender.com',
       description: 'Servidor de producción'
     },
@@ -36,7 +33,7 @@ const swaggerDefinition = {
 
   const options = {
   swaggerDefinition,
-  apis: ['./src/routes/sales-routes.js', './src/routes/shoes-routes.js', './src/routes/user-routes.js'], // Rutas a todos tus archivos de rutas
+  apis: ['./src/routes/*.js'], // Rutas a todos los archivos de rutas de las Apis
   
   }
 

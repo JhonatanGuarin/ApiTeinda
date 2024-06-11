@@ -133,7 +133,6 @@ router.get('/users/:id', getUser)
 router.post('/users', createUser)
 
 
-
 /**
  * @swagger
  * /users/{id}:
@@ -152,13 +151,23 @@ router.post('/users', createUser)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             type: object
+ *             properties:
+ *               mail:
+ *                 type: string
+ *             example:
+ *               mail: usuario@example.com
  *     responses:
  *       200:
  *         description: Usuario actualizado exitosamente
+ *       400:
+ *         description: El correo electrónico ya está registrado
+ *       404:
+ *         description: Usuario no encontrado
  *       500:
  *         description: Error del servidor
  */
+
 router.put('/users/:id', updateUser)
 
 
