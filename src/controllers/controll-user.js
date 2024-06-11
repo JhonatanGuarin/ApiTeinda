@@ -55,14 +55,26 @@ module.exports = {
       }
     },
 
-    updateUser : async(req,res)=>{
-      try{
-        const {id} = req.params
-        const userUpdate = await User.findByIdAndUpdate(id, req.body)
-
-        return res.status(200).json({data:userUpdate})
-      }catch(err){
-        return res.status(500).json({error:err})
+    updateUser: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const { mail } = req.body;
+    
+        // Verificar si el correo electrónico ya está registrado para otro usuario
+        const existingUser = await User.findOne({ mail, _id: { $ne: id } });
+        if (existingUser) {
+          return res.status(400).json({ error: 'El correo electrónico ya está registrado' });
+        }
+    
+        const userUpdate = await User.findByIdAndUpdate(id, req.body, { new: true });
+    
+        if (!userUpdate) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+    
+        return res.status(200).json({ data: userUpdate });
+      } catch (err) {
+        return res.status(500).json({ error: err });
       }
     }
   }
